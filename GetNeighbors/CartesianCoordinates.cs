@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GetNeighbors
 {
@@ -15,7 +16,26 @@ namespace GetNeighbors
         /// <exception cref="ArgumentException">Throw when h-distance is less or equals zero.</exception>
         public static Point[] GetNeighbors(Point point, int h, params Point[] points)
         {
-            throw new NotImplementedException("You need to implement this method.");
+            if (points is null)
+            {
+                throw new ArgumentNullException($"{nameof(points)} cannot be equals null.");
+            }
+
+            if (h < 0)
+            {
+                throw new ArgumentException($"{nameof(h)} cannot be less or equals zero.");
+            }
+
+            var resultList = new List<Point>();
+            for (int i = 0; i < points.Length; i++)
+            {
+                if (Math.Abs(points[i].X - point.X) <= h && Math.Abs(points[i].Y - point.Y) <= h)
+                {
+                    resultList.Add(points[i]);
+                }
+            }
+
+            return resultList.ToArray();
         }
     }
 }
